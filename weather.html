@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<style>
+		body {
+			background-color: black;
+		}
+		section {
+			font-size: 26pt;
+			color: white;
+		}
+	</style>
+    <script>
+	   function updateForecast() {
+           fetch('/weather')
+           .then(response => response.json())
+           .then(forecast => {
+               document.getElementById('temperatureValue').innerHTML=forecast.currently.temperature.toPrecision(3)
+           });
+       }
+       window.onload = function () {
+           updateForecast(); //Make sure the function fires as soon as the page is loaded
+           setTimeout(updateForecast, 600000); //Then set it to run again after ten minutes
+       }
+	</script>
+  </head>
+  <body>
+	<section>
+		Weather Now: <span id=temperatureValue></span>&#8451;
+	</section>	
+  </body>
+</html>
