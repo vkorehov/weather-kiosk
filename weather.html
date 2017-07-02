@@ -17,7 +17,7 @@
            .then(response => response.json())
            .then(forecast => {
                document.getElementById('nowTemperatureValue').innerHTML=forecast.currently.temperature.toPrecision(3)
-               document.getElementById('nowIcon').innerHTML="<svg src=\"icons/"+forecast.currently.icon+".svg\"></svg>"
+               document.getElementById('nowIcon').innerHTML="<img src=\"/icons/"+forecast.currently.icon+".svg\"/>"
            });
            setTimeout(updateForecast, 600000); //Then set it to run again
        }
