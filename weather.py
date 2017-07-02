@@ -1,7 +1,7 @@
 import web
 import requests
 
-urls = ("/weather", "darksky", "/icons/.*", "icons" "/.*", "index")
+urls = ("/weather", "darksky", "/icons/.*", "icons", "/.*" , "index")
 
 app = web.application(urls, globals())
 
