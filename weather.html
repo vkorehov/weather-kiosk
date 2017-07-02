@@ -37,10 +37,27 @@
                document.getElementById('nowTemp').innerHTML=forecast.currently.temperature.toPrecision(3)
                document.getElementById('nowWind').innerHTML=forecast.currently.windSpeed.toPrecision(2)
                document.getElementById('nowIcon').innerHTML="<img src=\"/icons/"+forecast.currently.icon+".svg\"/>"
+               var i = 0;
+               for(i = 0; i < forecast.hourly.data.length; i++) {
+                   if(forecast.hourly.data[i].time - forecast.currently.time >= 3600) {
+                       break;
+                   }
+               }
+               document.getElementById('1hTemp').innerHTML=forecast.hourly.data[i].temperature.toPrecision(3)
+               document.getElementById('1hWind').innerHTML=forecast.hourly.data[i].windSpeed.toPrecision(2)
+               document.getElementById('1hIcon').innerHTML="<img src=\"/icons/"+forecast.hourly.data[i].icon+".svg\"/>"
 
-               document.getElementById('1hTemp').innerHTML=forecast.hourly.data[1].temperature.toPrecision(3)
-               document.getElementById('1hWind').innerHTML=forecast.hourly.data[1].windSpeed.toPrecision(2)
-               document.getElementById('1hIcon').innerHTML="<img src=\"/icons/"+forecast.hourly.data[1].icon+".svg\"/>"
+               document.getElementById('2hTemp').innerHTML=forecast.hourly.data[i+1].temperature.toPrecision(3)
+               document.getElementById('2hWind').innerHTML=forecast.hourly.data[i+1].windSpeed.toPrecision(2)
+               document.getElementById('2hIcon').innerHTML="<img src=\"/icons/"+forecast.hourly.data[i+1].icon+".svg\"/>"
+
+               document.getElementById('3hTemp').innerHTML=forecast.hourly.data[i+2].temperature.toPrecision(3)
+               document.getElementById('3hWind').innerHTML=forecast.hourly.data[i+2].windSpeed.toPrecision(2)
+               document.getElementById('3hIcon').innerHTML="<img src=\"/icons/"+forecast.hourly.data[i+2].icon+".svg\"/>"
+
+               document.getElementById('4hTemp').innerHTML=forecast.hourly.data[i+3].temperature.toPrecision(3)
+               document.getElementById('4hWind').innerHTML=forecast.hourly.data[i+3].windSpeed.toPrecision(2)
+               document.getElementById('4hIcon').innerHTML="<img src=\"/icons/"+forecast.hourly.data[i+3].icon+".svg\"/>"
 
            });
            setTimeout(updateForecast, 600000); //Then set it to run again
