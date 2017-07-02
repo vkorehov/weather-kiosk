@@ -12,22 +12,30 @@
 		}
 	</style>
     <script>
-	   function updateForecast() {
+       function updateForecast() {
            fetch('/weather')
            .then(response => response.json())
            .then(forecast => {
-               document.getElementById('temperatureValue').innerHTML=forecast.currently.temperature.toPrecision(3)
+               document.getElementById('nowTemperatureValue').innerHTML=forecast.currently.temperature.toPrecision(3)
+               document.getElementById('nowIcon').innerHTML="<svg src=\"icons/"+forecast.currently.icon+".svg\"></svg>"
            });
+           setTimeout(updateForecast, 600000); //Then set it to run again
        }
        window.onload = function () {
            updateForecast(); //Make sure the function fires as soon as the page is loaded
-           setTimeout(updateForecast, 600000); //Then set it to run again after ten minutes
        }
 	</script>
   </head>
   <body>
 	<section>
-		Weather Now: <span id=temperatureValue></span>&#8451;
+		<table>
+			<tr>
+				<td>Weather</td>
+				<td>Now</td>
+				<td><span id=nowTemperatureValue></span>&#8451;</td>
+				<td><i id=nowIcon></i></td>
+			</tr>
+		</table>
 	</section>	
   </body>
 </html>
