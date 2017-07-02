@@ -1,7 +1,7 @@
 import web
 import requests
 
-urls = ("/current", "awcurrent", "/12hour", "awhist12h", "/weather", "darksky", "/icons/.*", "icons", "/.*" , "index")
+urls = ("/current", "awcurrent", "/12hour", "awhist12h", "/5day", "awhist5d", "/weather", "darksky", "/icons/.*", "icons", "/.*" , "index")
 
 app = web.application(urls, globals())
 
@@ -23,6 +23,10 @@ class awcurrent:
 class awhist12h:
     def GET(self):
         response = requests.get("http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/1432?metric=true&details=true&apikey=FtpDPAAXWP0u9GZJrqA0mBNdosegleCe")
+        return response.text
+class awhist5d:
+    def GET(self):
+        response = requests.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/1432?metric=true&details=true&apikey=FtpDPAAXWP0u9GZJrqA0mBNdosegleCe")
         return response.text
 
 

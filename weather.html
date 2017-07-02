@@ -30,10 +30,50 @@
 
            setTimeout(updateTime, 60000); //Then set it to run again
        }
+       function updateDailyForecast() {
+           fetch('/5day')
+           .then(response => response.json())
+           .then(forecast => {
+               var i = 0;
+               if(!forecast.DailyForecasts) {
+                   return;
+               }
+
+               for(i = 0; i < forecast.DailyForecasts.length; i++) {
+                   if(forecast.DailyForecasts[i].EpochDate - Math.floor(Date.now() / 1000) >= 0) {
+                       break;
+                   }
+               }
+               if(!forecast[i+3]) {
+                   return;
+               }
+
+               document.getElementById('1dTemp').innerHTML=forecast.DailyForecasts[i].Temperature.Maximum.Value
+               document.getElementById('1dWind').innerHTML=forecast.DailyForecasts[i].Day.Wind.Speed.Value
+               document.getElementById('1dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i].Day.Icon+".svg\"/>"
+
+               document.getElementById('2dTemp').innerHTML=forecast.DailyForecasts[i+1].Temperature.Maximum.Value
+               document.getElementById('2dWind').innerHTML=forecast.DailyForecasts[i+1].Day.Wind.Speed.Value
+               document.getElementById('2dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+1].Day.Icon+".svg\"/>"
+
+               document.getElementById('3dTemp').innerHTML=forecast.DailyForecasts[i+2].Temperature.Maximum.Value
+               document.getElementById('3dWind').innerHTML=forecast.DailyForecasts[i+2].Day.Wind.Speed.Value
+               document.getElementById('3dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+2].Day.Icon+".svg\"/>"
+
+               document.getElementById('4dTemp').innerHTML=forecast.DailyForecasts[i+3].Temperature.Maximum.Value
+               document.getElementById('4dWind').innerHTML=forecast.DailyForecasts[i+3].Day.Wind.Speed.Value
+               document.getElementById('4dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+3].Day.Icon+".svg\"/>"
+           });
+
+           setTimeout(updateDailyForecast, 28800000); // uodate every 8 hours
+       }
        function updateForecast() {
            fetch('/current')
            .then(response => response.json())
            .then(forecast => {
+               if(!forecast[0]) {
+                   return;
+               }
                document.getElementById('nowTemp').innerHTML=forecast[0].Temperature.Metric.Value
                document.getElementById('nowWind').innerHTML=forecast[0].Wind.Speed.Metric.Value
                document.getElementById('nowIcon').innerHTML="<img src=\"/icons/"+forecast[0].WeatherIcon+".svg\"/>"
@@ -42,10 +82,16 @@
            .then(response => response.json())
            .then(forecast => {
                var i = 0;
+               if(!forecast[0]) {
+                   return;
+               }
                for(i = 0; i < forecast.length; i++) {
                    if(forecast[i].EpochDateTime - Math.floor(Date.now() / 1000) >= 3600) {
                        break;
                    }
+               }
+               if(!forecast[i+3]) {
+                   return;
                }
                document.getElementById('1hTemp').innerHTML=forecast[i].Temperature.Value
                document.getElementById('1hWind').innerHTML=forecast[i].Wind.Speed.Value
@@ -62,12 +108,12 @@
                document.getElementById('4hTemp').innerHTML=forecast[i+3].Temperature.Value
                document.getElementById('4hWind').innerHTML=forecast[i+3].Wind.Speed.Value
                document.getElementById('4hIcon').innerHTML="<img src=\"/icons/"+forecast[i+3].WeatherIcon+".svg\"/>"
-
            });
-           setTimeout(updateForecast, 600000); //Then set it to run again
+           setTimeout(updateForecast, 1200000); //Then set it to run again
        }
        window.onload = function () {
            updateForecast();
+           updateDailyForecast();
            updateTime();
        }
 	</script>
@@ -108,7 +154,33 @@
                                 <td><span id=4hWind></span>km/h</td>
                                 <td class=icon><i id=4hIcon></i></td>
                         </tr>
-
+			<tr>
+				<td colspan=4>&nbsp;</td>
+			</tr>
+                        <tr>
+                                <td>+1d</td>
+                                <td><span id=1dTemp></span>&#8451;</td>
+                                <td><span id=1dWind></span>km/h</td>
+                                <td class=icon><i id=1dIcon></i></td>
+                        </tr>
+                        <tr>
+                                <td>+2d</td>
+                                <td><span id=2dTemp></span>&#8451;</td>
+                                <td><span id=2dWind></span>km/h</td>
+                                <td class=icon><i id=2dIcon></i></td>
+                        </tr>
+                        <tr>
+                                <td>+3d</td>
+                                <td><span id=3dTemp></span>&#8451;</td>
+                                <td><span id=3dWind></span>km/h</td>
+                                <td class=icon><i id=3dIcon></i></td>
+                        </tr>
+                        <tr>
+                                <td>+4d</td>
+                                <td><span id=4dTemp></span>&#8451;</td>
+                                <td><span id=4dWind></span>km/h</td>
+                                <td class=icon><i id=4dIcon></i></td>
+                        </tr>
 		</table>
 	</section>	
   </body>
