@@ -7,34 +7,104 @@
 			background-color: black;
 		}
 		section {
-			font-size: 26pt;
+			font-size: 30pt;
 			color: white;
 		}
+                .clock {
+                        font-size: 60pt;
+                }
+                th, td {
+                        padding: 30px;
+                        text-align: left;
+                }
+                .icon {
+                        padding: 0px;
+                }
 	</style>
     <script>
+       function updateTime() {
+           var d = new Date();
+           var h = (d.getHours()<10?'0':'') + d.getHours();
+           var m = (d.getMinutes()<10?'0':'') + d.getMinutes();
+           document.getElementById('clock').innerHTML=''+h+':'+m;
+
+           setTimeout(updateTime, 60000); //Then set it to run again
+       }
        function updateForecast() {
            fetch('/weather')
            .then(response => response.json())
            .then(forecast => {
-               document.getElementById('nowTemperatureValue').innerHTML=forecast.currently.temperature.toPrecision(3)
-               document.getElementById('nowIcon').innerHTML="<svg src=\"icons/"+forecast.currently.icon+".svg\"></svg>"
+               document.getElementById('nowTemp').innerHTML=forecast.currently.temperature.toPrecision(3)
+               document.getElementById('nowWind').innerHTML=forecast.currently.windSpeed.toPrecision(2)
+               document.getElementById('nowIcon').innerHTML="<img src=\"/icons/"+forecast.currently.icon+".svg\"/>"
+               var i = 0;
+               for(i = 0; i < forecast.hourly.data.length; i++) {
+                   if(forecast.hourly.data[i].time - forecast.currently.time >= 3600) {
+                       break;
+                   }
+               }
+               document.getElementById('1hTemp').innerHTML=forecast.hourly.data[i].temperature.toPrecision(3)
+               document.getElementById('1hWind').innerHTML=forecast.hourly.data[i].windSpeed.toPrecision(2)
+               document.getElementById('1hIcon').innerHTML="<img src=\"/icons/"+forecast.hourly.data[i].icon+".svg\"/>"
+
+               document.getElementById('2hTemp').innerHTML=forecast.hourly.data[i+1].temperature.toPrecision(3)
+               document.getElementById('2hWind').innerHTML=forecast.hourly.data[i+1].windSpeed.toPrecision(2)
+               document.getElementById('2hIcon').innerHTML="<img src=\"/icons/"+forecast.hourly.data[i+1].icon+".svg\"/>"
+
+               document.getElementById('3hTemp').innerHTML=forecast.hourly.data[i+2].temperature.toPrecision(3)
+               document.getElementById('3hWind').innerHTML=forecast.hourly.data[i+2].windSpeed.toPrecision(2)
+               document.getElementById('3hIcon').innerHTML="<img src=\"/icons/"+forecast.hourly.data[i+2].icon+".svg\"/>"
+
+               document.getElementById('4hTemp').innerHTML=forecast.hourly.data[i+3].temperature.toPrecision(3)
+               document.getElementById('4hWind').innerHTML=forecast.hourly.data[i+3].windSpeed.toPrecision(2)
+               document.getElementById('4hIcon').innerHTML="<img src=\"/icons/"+forecast.hourly.data[i+3].icon+".svg\"/>"
+
            });
            setTimeout(updateForecast, 600000); //Then set it to run again
        }
        window.onload = function () {
-           updateForecast(); //Make sure the function fires as soon as the page is loaded
+           updateForecast();
+           updateTime();
        }
 	</script>
   </head>
   <body>
 	<section>
 		<table>
+                        <tr>
+                                <td colspan=4><span class="clock" id=clock></span></td>
+                        </tr>
 			<tr>
-				<td>Weather</td>
 				<td>Now</td>
-				<td><span id=nowTemperatureValue></span>&#8451;</td>
-				<td><i id=nowIcon></i></td>
+				<td><span id=nowTemp></span>&#8451;</td>
+                                <td><span id=nowWind></span>m/s</td>
+				<td class=icon><i id=nowIcon></i></td>
 			</tr>
+                        <tr>
+                                <td>+1h</td>
+                                <td><span id=1hTemp></span>&#8451;</td>
+                                <td><span id=1hWind></span>m/s</td>
+                                <td class=icon><i id=1hIcon></i></td>
+                        </tr>
+                        <tr>
+                                <td>+2h</td>
+                                <td><span id=2hTemp></span>&#8451;</td>
+                                <td><span id=2hWind></span>m/s</td>
+                                <td class=icon><i id=2hIcon></i></td>
+                        </tr>
+                        <tr>
+                                <td>+3h</td>
+                                <td><span id=3hTemp></span>&#8451;</td>
+                                <td><span id=3hWind></span>m/s</td>
+                                <td class=icon><i id=3hIcon></i></td>
+                        </tr>
+                        <tr>
+                                <td>+4h</td>
+                                <td><span id=4hTemp></span>&#8451;</td>
+                                <td><span id=4hWind></span>m/s</td>
+                                <td class=icon><i id=4hIcon></i></td>
+                        </tr>
+
 		</table>
 	</section>	
   </body>

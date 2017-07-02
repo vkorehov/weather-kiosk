@@ -19,10 +19,11 @@ class darksky:
 
 class icons:
     def GET(self):
-        weather = None
-        with open(web.ctx.path, 'r') as wf:
-            weather = wf.read()
-        return weather
+        icon = None
+        with open(web.ctx.path[1:], 'r') as icf:
+            icon = icf.read()
+        web.header('Content-Type', 'image/svg+xml')
+        return icon
 
 if __name__ == "__main__":
     app.run()
