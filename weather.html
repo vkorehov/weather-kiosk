@@ -31,6 +31,20 @@
            setTimeout(updateTime, 60000); //Then set it to run again
        }
        function updateDailyForecast() {
+           document.getElementById('1dTemp').innerHTML=""
+           document.getElementById('1dWind').innerHTML=""
+           document.getElementById('1dIcon').innerHTML=""
+           document.getElementById('2dTemp').innerHTML=""
+           document.getElementById('2dWind').innerHTML=""
+           document.getElementById('2dIcon').innerHTML=""
+           document.getElementById('3dTemp').innerHTML=""
+           document.getElementById('3dWind').innerHTML=""
+           document.getElementById('3dIcon').innerHTML=""
+           document.getElementById('4dTemp').innerHTML=""
+           document.getElementById('4dWind').innerHTML=""
+           document.getElementById('4dIcon').innerHTML=""
+
+
            fetch('/5day')
            .then(response => response.json())
            .then(forecast => {
@@ -44,7 +58,7 @@
                        break;
                    }
                }
-               if(!forecast[i+3]) {
+               if(!forecast.DailyForecasts[i+3]) {
                    return;
                }
 
@@ -68,6 +82,22 @@
            setTimeout(updateDailyForecast, 28800000); // uodate every 8 hours
        }
        function updateForecast() {
+           document.getElementById('nowTemp').innerHTML=""
+           document.getElementById('nowWind').innerHTML=""
+           document.getElementById('nowIcon').innerHTML=""
+           document.getElementById('1hTemp').innerHTML=""
+           document.getElementById('1hWind').innerHTML=""
+           document.getElementById('1hIcon').innerHTML=""
+           document.getElementById('2hTemp').innerHTML=""
+           document.getElementById('2hWind').innerHTML=""
+           document.getElementById('2hIcon').innerHTML=""
+           document.getElementById('3hTemp').innerHTML=""
+           document.getElementById('3hWind').innerHTML=""
+           document.getElementById('3hIcon').innerHTML=""
+           document.getElementById('4hTemp').innerHTML=""
+           document.getElementById('4hWind').innerHTML=""
+           document.getElementById('4hIcon').innerHTML=""
+
            fetch('/current')
            .then(response => response.json())
            .then(forecast => {
