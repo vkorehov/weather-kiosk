@@ -140,8 +140,8 @@
                document.getElementById('4hWind').innerHTML=forecast[i+3].Wind.Speed.Value
                document.getElementById('4hIcon').innerHTML="<img src=\"/icons/"+forecast[i+3].WeatherIcon+".svg\"/>"
            });
+           document.getElementById('debug').innerHTML="Delay:"+(3600000+(triggeredTime % 3600000));
            setTimeout(updateForecast, 3600000+(triggeredTime % 3600000)); //Then set it to run again
-           document.getElementById('4hIcon').innerHTML="Delay:"+3600000+(triggeredTime % 3600000);
        }
        window.onload = function () {
            updateForecast();
