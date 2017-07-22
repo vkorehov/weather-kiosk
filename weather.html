@@ -82,6 +82,7 @@
            setTimeout(updateDailyForecast, 28800000); // uodate every 8 hours
        }
        function updateForecast() {
+           triggeredTime = Date.now()
            document.getElementById('nowTemp').innerHTML=""
            document.getElementById('nowWind').innerHTML=""
            document.getElementById('nowIcon').innerHTML=""
@@ -110,7 +111,7 @@
            });
            fetch('/12hour')
            .then(response => response.json())
-           .then(forecast => {
+           .then(forecast => {               
                var i = 0;
                if(!forecast[0]) {
                    return;
@@ -139,7 +140,8 @@
                document.getElementById('4hWind').innerHTML=forecast[i+3].Wind.Speed.Value
                document.getElementById('4hIcon').innerHTML="<img src=\"/icons/"+forecast[i+3].WeatherIcon+".svg\"/>"
            });
-           setTimeout(updateForecast, 1200000); //Then set it to run again
+           setTimeout(updateForecast, 3600000+(triggeredTime % 3600000)); //Then set it to run again
+           document.getElementById('4hIcon').innerHTML="Delay:"+3600000+(triggeredTime % 3600000);
        }
        window.onload = function () {
            updateForecast();
@@ -210,6 +212,9 @@
                                 <td><span id=4dTemp></span>&#8451;</td>
                                 <td><span id=4dWind></span>km/h</td>
                                 <td class=icon><i id=4dIcon></i></td>
+                        </tr>
+                        <tr>
+                                <td colspan=4><span id=debug></span></td>
                         </tr>
 		</table>
 	</section>	
