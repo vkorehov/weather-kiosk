@@ -27,7 +27,10 @@
            var h = (d.getHours()<10?'0':'') + d.getHours();
            var m = (d.getMinutes()<10?'0':'') + d.getMinutes();
            document.getElementById('clock').innerHTML=''+h+':'+m;
-
+           var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                            ];
+           document.getElementById('date').innerHTML=('0'+d.getDay()).slice(-2)+" "+monthNames[d.getMonth()];
            setTimeout(updateTime, 60000); //Then set it to run again
        }
        function updateDailyForecast() {
@@ -133,22 +136,22 @@
                if(!forecast[i+3]) {
                    return;
                }
-	       document.getElementById('1hTime').innerHTML=("0"+(new Date(forecast[i].EpochDateTime * 1000)).getHours()).slice(-2)
+	       document.getElementById('1hTime').innerHTML=("0"+(new Date(forecast[i].EpochDateTime * 1000)).getHours()).slice(-2)+":00"
                document.getElementById('1hTemp').innerHTML=forecast[i].Temperature.Value
                document.getElementById('1hWind').innerHTML=forecast[i].Wind.Speed.Value
                document.getElementById('1hIcon').innerHTML="<img src=\"/icons/"+forecast[i].WeatherIcon+".svg\"/>"
 
-               document.getElementById('2hTime').innerHTML=("0"+(new Date(forecast[i+1].EpochDateTime * 1000)).getHours()).slice(-2)
+               document.getElementById('2hTime').innerHTML=("0"+(new Date(forecast[i+1].EpochDateTime * 1000)).getHours()).slice(-2)+":00"
                document.getElementById('2hTemp').innerHTML=forecast[i+1].Temperature.Value
                document.getElementById('2hWind').innerHTML=forecast[i+1].Wind.Speed.Value
                document.getElementById('2hIcon').innerHTML="<img src=\"/icons/"+forecast[i+1].WeatherIcon+".svg\"/>"
 
-               document.getElementById('3hTime').innerHTML=("0"+(new Date(forecast[i+2].EpochDateTime * 1000)).getHours()).slice(-2)
+               document.getElementById('3hTime').innerHTML=("0"+(new Date(forecast[i+2].EpochDateTime * 1000)).getHours()).slice(-2)+":00"
                document.getElementById('3hTemp').innerHTML=forecast[i+2].Temperature.Value
                document.getElementById('3hWind').innerHTML=forecast[i+2].Wind.Speed.Value
                document.getElementById('3hIcon').innerHTML="<img src=\"/icons/"+forecast[i+2].WeatherIcon+".svg\"/>"
 
-               document.getElementById('4hTime').innerHTML=("0"+(new Date(forecast[i+3].EpochDateTime * 1000)).getHours()).slice(-2)
+               document.getElementById('4hTime').innerHTML=("0"+(new Date(forecast[i+3].EpochDateTime * 1000)).getHours()).slice(-2)+":00"
                document.getElementById('4hTemp').innerHTML=forecast[i+3].Temperature.Value
                document.getElementById('4hWind').innerHTML=forecast[i+3].Wind.Speed.Value
                document.getElementById('4hIcon').innerHTML="<img src=\"/icons/"+forecast[i+3].WeatherIcon+".svg\"/>"
