@@ -61,7 +61,12 @@
                if(!forecast.DailyForecasts[i+3]) {
                    return;
                }
-
+               
+               if(i != 0) {      
+                   document.getElementById('0dTemp').innerHTML=forecast.DailyForecasts[i-1].Temperature.Maximum.Value
+                   document.getElementById('0dWind').innerHTML=forecast.DailyForecasts[i-1].Day.Wind.Speed.Value
+                   document.getElementById('0dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i-1].Day.Icon+".svg\"/>"
+               }
                document.getElementById('1dTemp').innerHTML=forecast.DailyForecasts[i].Temperature.Maximum.Value
                document.getElementById('1dWind').innerHTML=forecast.DailyForecasts[i].Day.Wind.Speed.Value
                document.getElementById('1dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i].Day.Icon+".svg\"/>"
@@ -86,15 +91,19 @@
            document.getElementById('nowTemp').innerHTML=""
            document.getElementById('nowWind').innerHTML=""
            document.getElementById('nowIcon').innerHTML=""
+           document.getElementById('1hTime').innerHTML=""
            document.getElementById('1hTemp').innerHTML=""
            document.getElementById('1hWind').innerHTML=""
            document.getElementById('1hIcon').innerHTML=""
+           document.getElementById('2hTime').innerHTML=""
            document.getElementById('2hTemp').innerHTML=""
            document.getElementById('2hWind').innerHTML=""
            document.getElementById('2hIcon').innerHTML=""
+           document.getElementById('3hTime').innerHTML=""
            document.getElementById('3hTemp').innerHTML=""
            document.getElementById('3hWind').innerHTML=""
            document.getElementById('3hIcon').innerHTML=""
+           document.getElementById('4hTime').innerHTML=""
            document.getElementById('4hTemp').innerHTML=""
            document.getElementById('4hWind').innerHTML=""
            document.getElementById('4hIcon').innerHTML=""
@@ -124,24 +133,28 @@
                if(!forecast[i+3]) {
                    return;
                }
+	       document.getElementById('1hTime').innerHTML=("0"+(new Date(forecast[i].EpochDateTime * 1000)).getHours()).slice(-2)
                document.getElementById('1hTemp').innerHTML=forecast[i].Temperature.Value
                document.getElementById('1hWind').innerHTML=forecast[i].Wind.Speed.Value
                document.getElementById('1hIcon').innerHTML="<img src=\"/icons/"+forecast[i].WeatherIcon+".svg\"/>"
 
+               document.getElementById('2hTime').innerHTML=("0"+(new Date(forecast[i+1].EpochDateTime * 1000)).getHours()).slice(-2)
                document.getElementById('2hTemp').innerHTML=forecast[i+1].Temperature.Value
                document.getElementById('2hWind').innerHTML=forecast[i+1].Wind.Speed.Value
                document.getElementById('2hIcon').innerHTML="<img src=\"/icons/"+forecast[i+1].WeatherIcon+".svg\"/>"
 
+               document.getElementById('3hTime').innerHTML=("0"+(new Date(forecast[i+2].EpochDateTime * 1000)).getHours()).slice(-2)
                document.getElementById('3hTemp').innerHTML=forecast[i+2].Temperature.Value
                document.getElementById('3hWind').innerHTML=forecast[i+2].Wind.Speed.Value
                document.getElementById('3hIcon').innerHTML="<img src=\"/icons/"+forecast[i+2].WeatherIcon+".svg\"/>"
 
+               document.getElementById('4hTime').innerHTML=("0"+(new Date(forecast[i+3].EpochDateTime * 1000)).getHours()).slice(-2)
                document.getElementById('4hTemp').innerHTML=forecast[i+3].Temperature.Value
                document.getElementById('4hWind').innerHTML=forecast[i+3].Wind.Speed.Value
                document.getElementById('4hIcon').innerHTML="<img src=\"/icons/"+forecast[i+3].WeatherIcon+".svg\"/>"
            });
-           document.getElementById('debug').innerHTML="Delay:"+(3600000+(triggeredTime % 3600000));
-           setTimeout(updateForecast, 3600000+(triggeredTime % 3600000)); //Then set it to run again
+           document.getElementById('debug').innerHTML="Delay:"+(3600000-(triggeredTime % 3600000));
+           setTimeout(updateForecast, 3600000-(triggeredTime % 3600000)); //Then set it to run again
        }
        window.onload = function () {
            updateForecast();
@@ -154,7 +167,8 @@
 	<section>
 		<table>
                         <tr>
-                                <td colspan=4><span class="clock" id=clock></span></td>
+                                <td colspan=2><span class="clock" id=date></span></td>
+                                <td colspan=2><span class="clock" id=clock></span></td>
                         </tr>
 			<tr>
 				<td>Now</td>
@@ -163,25 +177,25 @@
 				<td class=icon><i id=nowIcon></i></td>
 			</tr>
                         <tr>
-                                <td>+1h</td>
+                                <td><span id=1hTime></td>
                                 <td><span id=1hTemp></span>&#8451;</td>
                                 <td><span id=1hWind></span>km/h</td>
                                 <td class=icon><i id=1hIcon></i></td>
                         </tr>
                         <tr>
-                                <td>+2h</td>
+                                <td><span id=2hTime></td>
                                 <td><span id=2hTemp></span>&#8451;</td>
                                 <td><span id=2hWind></span>km/h</td>
                                 <td class=icon><i id=2hIcon></i></td>
                         </tr>
                         <tr>
-                                <td>+3h</td>
+                                <td><span id=3hTime></td>
                                 <td><span id=3hTemp></span>&#8451;</td>
                                 <td><span id=3hWind></span>km/h</td>
                                 <td class=icon><i id=3hIcon></i></td>
                         </tr>
                         <tr>
-                                <td>+4h</td>
+                                <td><span id=4hTime></td>
                                 <td><span id=4hTemp></span>&#8451;</td>
                                 <td><span id=4hWind></span>km/h</td>
                                 <td class=icon><i id=4hIcon></i></td>
@@ -189,6 +203,12 @@
 			<tr>
 				<td colspan=4>&nbsp;</td>
 			</tr>
+                        <tr>
+                                <td>Today</td>
+                                <td><span id=0dTemp></span>&#8451;</td>
+                                <td><span id=0dWind></span>km/h</td>
+                                <td class=icon><i id=0dIcon></i></td>
+                        </tr>
                         <tr>
                                 <td>+1d</td>
                                 <td><span id=1dTemp></span>&#8451;</td>
