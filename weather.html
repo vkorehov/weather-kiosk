@@ -124,13 +124,13 @@
            fetch('/12hour')
            .then(response => response.json())
            .then(forecast => {               
-               var i = 0;
+               var i = 0;               
                if(!forecast[0]) {
                    return;
                }
                for(i = 0; i < forecast.length; i++) {
-                   if(forecast[i].EpochDateTime >= moment.utc().startOf('hour').unix() &&
-                      forecast[i].EpochDateTime < moment.utc().endOf('hour').unix()) {
+                   if(forecast[i].EpochDateTime >= moment.utc().startOf('hour').add(1, 'hours').unix() &&
+                      forecast[i].EpochDateTime < moment.utc().endOf('hour').add(1, 'hours').unix()) {
                        break;
                    }
                }
