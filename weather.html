@@ -129,7 +129,8 @@
                    return;
                }
                for(i = 0; i < forecast.length; i++) {
-                   if(forecast[i].EpochDateTime - Math.floor(Date.now() / 1000) >= 3600) {
+                   if(forecast[i].EpochDateTime >= moment.utc().startOf('hour').unix() &&
+                      forecast[i].EpochDateTime < moment.utc().endOf('hour').unix()) {
                        break;
                    }
                }
