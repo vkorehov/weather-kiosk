@@ -21,6 +21,7 @@
                         padding: 0px;
                 }
 	</style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
     <script>
        function updateTime() {
            var d = new Date();
@@ -30,7 +31,7 @@
            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
                             ];
-           document.getElementById('date').innerHTML=('0'+d.getDay()).slice(-2)+" "+monthNames[d.getMonth()];
+           document.getElementById('date').innerHTML=('0'+d.getDate()).slice(-2)+"  "+monthNames[d.getMonth()];
            setTimeout(updateTime, 60000); //Then set it to run again
        }
        function updateDailyForecast() {
@@ -57,34 +58,33 @@
                }
 
                for(i = 0; i < forecast.DailyForecasts.length; i++) {
-                   if(forecast.DailyForecasts[i].EpochDate - Math.floor(Date.now() / 1000) >= 0) {
+                   if(forecast.DailyForecasts[i].EpochDate >= moment.utc().startOf('day').unix() &&
+                      forecast.DailyForecasts[i].EpochDate < moment.utc().endOf('day').unix()) {
                        break;
                    }
                }
-               if(!forecast.DailyForecasts[i+3]) {
+               if(!forecast.DailyForecasts[i+4]) {
                    return;
                }
+               document.getElementById('0dTemp').innerHTML=forecast.DailyForecasts[i].Temperature.Maximum.Value
+               document.getElementById('0dWind').innerHTML=forecast.DailyForecasts[i].Day.Wind.Speed.Value
+               document.getElementById('0dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i].Day.Icon+".svg\"/>"
                
-               if(i != 0) {      
-                   document.getElementById('0dTemp').innerHTML=forecast.DailyForecasts[i-1].Temperature.Maximum.Value
-                   document.getElementById('0dWind').innerHTML=forecast.DailyForecasts[i-1].Day.Wind.Speed.Value
-                   document.getElementById('0dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i-1].Day.Icon+".svg\"/>"
-               }
-               document.getElementById('1dTemp').innerHTML=forecast.DailyForecasts[i].Temperature.Maximum.Value
-               document.getElementById('1dWind').innerHTML=forecast.DailyForecasts[i].Day.Wind.Speed.Value
-               document.getElementById('1dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i].Day.Icon+".svg\"/>"
+               document.getElementById('1dTemp').innerHTML=forecast.DailyForecasts[i+1].Temperature.Maximum.Value
+               document.getElementById('1dWind').innerHTML=forecast.DailyForecasts[i+1].Day.Wind.Speed.Value
+               document.getElementById('1dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+1].Day.Icon+".svg\"/>"
 
-               document.getElementById('2dTemp').innerHTML=forecast.DailyForecasts[i+1].Temperature.Maximum.Value
-               document.getElementById('2dWind').innerHTML=forecast.DailyForecasts[i+1].Day.Wind.Speed.Value
-               document.getElementById('2dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+1].Day.Icon+".svg\"/>"
+               document.getElementById('2dTemp').innerHTML=forecast.DailyForecasts[i+2].Temperature.Maximum.Value
+               document.getElementById('2dWind').innerHTML=forecast.DailyForecasts[i+2].Day.Wind.Speed.Value
+               document.getElementById('2dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+2].Day.Icon+".svg\"/>"
 
-               document.getElementById('3dTemp').innerHTML=forecast.DailyForecasts[i+2].Temperature.Maximum.Value
-               document.getElementById('3dWind').innerHTML=forecast.DailyForecasts[i+2].Day.Wind.Speed.Value
-               document.getElementById('3dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+2].Day.Icon+".svg\"/>"
+               document.getElementById('3dTemp').innerHTML=forecast.DailyForecasts[i+3].Temperature.Maximum.Value
+               document.getElementById('3dWind').innerHTML=forecast.DailyForecasts[i+3].Day.Wind.Speed.Value
+               document.getElementById('3dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+3].Day.Icon+".svg\"/>"
 
-               document.getElementById('4dTemp').innerHTML=forecast.DailyForecasts[i+3].Temperature.Maximum.Value
-               document.getElementById('4dWind').innerHTML=forecast.DailyForecasts[i+3].Day.Wind.Speed.Value
-               document.getElementById('4dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+3].Day.Icon+".svg\"/>"
+               document.getElementById('4dTemp').innerHTML=forecast.DailyForecasts[i+4].Temperature.Maximum.Value
+               document.getElementById('4dWind').innerHTML=forecast.DailyForecasts[i+4].Day.Wind.Speed.Value
+               document.getElementById('4dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+4].Day.Icon+".svg\"/>"
            });
 
            setTimeout(updateDailyForecast, 28800000); // uodate every 8 hours
