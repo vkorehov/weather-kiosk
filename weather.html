@@ -63,6 +63,13 @@
                        break;
                    }
                }
+               if(!forecast.DailyForecasts[i+1]) {
+                   return;
+               }
+               if(forecast.DailyForecasts[i+1].EpochDate >= moment.utc().startOf('day').unix() &&
+                   forecast.DailyForecasts[i+1].EpochDate < moment.utc().endOf('day').unix()) {
+                   i++;
+               }
                if(!forecast.DailyForecasts[i+4]) {
                    return;
                }
