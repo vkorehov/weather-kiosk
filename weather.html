@@ -74,27 +74,27 @@
                if(!forecast.DailyForecasts[i+4]) {
                    return;
                }
-               document.getElementById('0dDay').innerHTML=moment.unix(forecast.DailyForecasts[i].EpochDate).format('dddd')
+               document.getElementById('0dDay').innerHTML=moment.unix(forecast.DailyForecasts[i].EpochDate).format('ddd')
                document.getElementById('0dTemp').innerHTML=forecast.DailyForecasts[i].Temperature.Maximum.Value
                document.getElementById('0dWind').innerHTML=forecast.DailyForecasts[i].Day.Wind.Speed.Value
                document.getElementById('0dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i].Day.Icon+".svg\"/>"
 
-               document.getElementById('1dDay').innerHTML=moment.unix(forecast.DailyForecasts[i+1].EpochDate).format('dddd')
+               document.getElementById('1dDay').innerHTML=moment.unix(forecast.DailyForecasts[i+1].EpochDate).format('ddd')
                document.getElementById('1dTemp').innerHTML=forecast.DailyForecasts[i+1].Temperature.Maximum.Value
                document.getElementById('1dWind').innerHTML=forecast.DailyForecasts[i+1].Day.Wind.Speed.Value
                document.getElementById('1dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+1].Day.Icon+".svg\"/>"
 
-               document.getElementById('2dDay').innerHTML=moment.unix(forecast.DailyForecasts[i+2].EpochDate).format('dddd')
+               document.getElementById('2dDay').innerHTML=moment.unix(forecast.DailyForecasts[i+2].EpochDate).format('ddd')
                document.getElementById('2dTemp').innerHTML=forecast.DailyForecasts[i+2].Temperature.Maximum.Value
                document.getElementById('2dWind').innerHTML=forecast.DailyForecasts[i+2].Day.Wind.Speed.Value
                document.getElementById('2dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+2].Day.Icon+".svg\"/>"
 
-               document.getElementById('3dDay').innerHTML=moment.unix(forecast.DailyForecasts[i+3].EpochDate).format('dddd')
+               document.getElementById('3dDay').innerHTML=moment.unix(forecast.DailyForecasts[i+3].EpochDate).format('ddd')
                document.getElementById('3dTemp').innerHTML=forecast.DailyForecasts[i+3].Temperature.Maximum.Value
                document.getElementById('3dWind').innerHTML=forecast.DailyForecasts[i+3].Day.Wind.Speed.Value
                document.getElementById('3dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+3].Day.Icon+".svg\"/>"
 
-               document.getElementById('4dDay').innerHTML=moment.unix(forecast.DailyForecasts[i+4].EpochDate).format('dddd')
+               document.getElementById('4dDay').innerHTML=moment.unix(forecast.DailyForecasts[i+4].EpochDate).format('ddd')
                document.getElementById('4dTemp').innerHTML=forecast.DailyForecasts[i+4].Temperature.Maximum.Value
                document.getElementById('4dWind').innerHTML=forecast.DailyForecasts[i+4].Day.Wind.Speed.Value
                document.getElementById('4dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+4].Day.Icon+".svg\"/>"
