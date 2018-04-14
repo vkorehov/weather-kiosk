@@ -35,15 +35,23 @@
            setTimeout(updateTime, 60000); //Then set it to run again
        }
        function updateDailyForecast() {
+           document.getElementById('0dDay').innerHTML=""
+           document.getElementById('0dTemp').innerHTML=""
+           document.getElementById('0dWind').innerHTML=""
+           document.getElementById('0dIcon').innerHTML=""
+           document.getElementById('1dDay').innerHTML=""
            document.getElementById('1dTemp').innerHTML=""
            document.getElementById('1dWind').innerHTML=""
            document.getElementById('1dIcon').innerHTML=""
+           document.getElementById('2dDay').innerHTML=""
            document.getElementById('2dTemp').innerHTML=""
            document.getElementById('2dWind').innerHTML=""
            document.getElementById('2dIcon').innerHTML=""
+           document.getElementById('3dDay').innerHTML=""
            document.getElementById('3dTemp').innerHTML=""
            document.getElementById('3dWind').innerHTML=""
            document.getElementById('3dIcon').innerHTML=""
+           document.getElementById('4dDay').innerHTML=""
            document.getElementById('4dTemp').innerHTML=""
            document.getElementById('4dWind').innerHTML=""
            document.getElementById('4dIcon').innerHTML=""
@@ -57,7 +65,7 @@
                    return;
                }
 
-               for(i = forecast.DailyForecasts.length; i >= 0; i--) {
+               for(i = forecast.DailyForecasts.length - 1; i >= 0; i--) {
                    if(forecast.DailyForecasts[i].EpochDate >= moment.utc().startOf('day').unix() &&
                       forecast.DailyForecasts[i].EpochDate < moment.utc().endOf('day').unix()) {
                        break;
@@ -133,7 +141,7 @@
                if(!forecast[0]) {
                    return;
                }
-               for(i = forecast.length; i >= 0; i--) {
+               for(i = forecast.length - 1; i >= 0; i--) {
                    if(forecast[i].EpochDateTime >= moment.utc().startOf('hour').add(1, 'hours').unix() &&
                       forecast[i].EpochDateTime < moment.utc().endOf('hour').add(1, 'hours').unix()) {
                        break;
