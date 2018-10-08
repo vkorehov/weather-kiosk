@@ -35,6 +35,7 @@
            setTimeout(updateTime, 60000); //Then set it to run again
        }
        function updateDailyForecast() {
+           triggeredTime = Date.now()
            document.getElementById('0dDay').innerHTML=""
            document.getElementById('0dTemp').innerHTML=""
            document.getElementById('0dWind').innerHTML=""
@@ -98,9 +99,9 @@
                document.getElementById('4dTemp').innerHTML=forecast.DailyForecasts[i+4].Temperature.Maximum.Value
                document.getElementById('4dWind').innerHTML=forecast.DailyForecasts[i+4].Day.Wind.Speed.Value
                document.getElementById('4dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+4].Day.Icon+".svg\"/>"
-           });
-
-           setTimeout(updateDailyForecast, 28800000); // uodate every 8 hours
+           }).catch(() => {});
+           //setTimeout(updateDailyForecast, 14400000); // uodate every 4 hours
+           setTimeout(updateDailyForecast, 28800000-(triggeredTime % 28800000)); //Then set it to run again
        }
        function updateForecast() {
            triggeredTime = Date.now()
@@ -124,16 +125,16 @@
            document.getElementById('4hWind').innerHTML=""
            document.getElementById('4hIcon').innerHTML=""
 
-           fetch('/current')
-           .then(response => response.json())
-           .then(forecast => {
-               if(!forecast[0]) {
-                   return;
-               }
-               document.getElementById('nowTemp').innerHTML=forecast[0].Temperature.Metric.Value
-               document.getElementById('nowWind').innerHTML=forecast[0].Wind.Speed.Metric.Value
-               document.getElementById('nowIcon').innerHTML="<img src=\"/icons/"+forecast[0].WeatherIcon+".svg\"/>"
-           });
+           //fetch('/current')
+           //.then(response => response.json())
+           //.then(forecast => {
+           //    if(!forecast[0]) {
+           //        return;
+           //    }
+           //    document.getElementById('nowTemp').innerHTML=forecast[0].Temperature.Metric.Value
+           //    document.getElementById('nowWind').innerHTML=forecast[0].Wind.Speed.Metric.Value
+           //    document.getElementById('nowIcon').innerHTML="<img src=\"/icons/"+forecast[0].WeatherIcon+".svg\"/>"
+           //}).catch(() => {});
            fetch('/12hour')
            .then(response => response.json())
            .then(forecast => {               
@@ -169,7 +170,7 @@
                document.getElementById('4hTemp').innerHTML=forecast[i+3].Temperature.Value
                document.getElementById('4hWind').innerHTML=forecast[i+3].Wind.Speed.Value
                document.getElementById('4hIcon').innerHTML="<img src=\"/icons/"+forecast[i+3].WeatherIcon+".svg\"/>"
-           });
+           }).catch(() => {});
            document.getElementById('debug').innerHTML="Delay:"+(3600000-(triggeredTime % 3600000));
            setTimeout(updateForecast, 3600000-(triggeredTime % 3600000)); //Then set it to run again
        }
