@@ -101,7 +101,7 @@
                document.getElementById('4dIcon').innerHTML="<img src=\"/icons/"+forecast.DailyForecasts[i+4].Day.Icon+".svg\"/>"
            }).catch(() => {});
            //setTimeout(updateDailyForecast, 14400000); // uodate every 4 hours
-           setTimeout(updateDailyForecast, 28800000-(triggeredTime % 28800000)); //Then set it to run again
+           setTimeout(updateDailyForecast, 14400000); //Then set it to run again
        }
        function updateForecast() {
            triggeredTime = Date.now()
